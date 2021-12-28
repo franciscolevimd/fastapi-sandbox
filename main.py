@@ -25,6 +25,12 @@ class Person(BaseModel):
     is_married: Optional[bool] = None
 
 
+class Location(BaseModel):
+    city: str
+    state: str
+    country: str
+
+
 @app.get('/')
 def home():
     return {'result': 'OK'}
@@ -63,7 +69,24 @@ def show_person(
         ...,
         gt=0,
         title='Person Id',
-        description='This is the person id. It\'s required'
+        description='This is the person ID'
     )
 ):
     return {person_id: 'It exists!'}
+
+
+# Validaciones: Request Body
+@app.put('/person/{person_id}')
+def update_person(
+    person_id: int = Path(
+        ...,
+        title='PersonId',
+        description='This is the person ID',
+        gt=0
+    ),
+    person: Person = Body(...),
+    location: Location = Body(...)
+):
+    results = person.dict()
+    results.update(location.dict())
+    return results
