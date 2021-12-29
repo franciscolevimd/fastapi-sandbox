@@ -32,20 +32,34 @@ class Person(BaseModel):
     first_name: str = Field(
         ...,
         min_length=1,
-        max_length=50
+        max_length=50,
+        example='Arisaurio'
     )
     last_name: str = Field(
         ...,
         min_length=1,
-        max_length=50
+        max_length=50,
+        example='Rex'
     )
     age: int = Field(
         ...,
         gt=0,
-        le=1000
+        le=1000,
+        example=17
     )
-    hair_color: Optional[HairColor] = Field(default=None)
-    is_married: Optional[bool] = Field(default=None)
+    hair_color: Optional[HairColor] = Field(default=None, example='blue')
+    is_married: Optional[bool] = Field(default=None, example=False)
+
+    # class Config:
+    #     schema_extra = {
+    #         'example': {
+    #             'first_name': 'Arisaurio',
+    #             'last_name': 'Rex',
+    #             'age': 17,
+    #             'hair_color': 'blue',
+    #             'is_married': False
+    #         }
+    #     }
 
 
 class Location(BaseModel):
@@ -120,8 +134,9 @@ def update_person(
         gt=0
     ),
     person: Person = Body(...),
-    location: Location = Body(...)
+    # location: Location = Body(...)
 ):
-    results = person.dict()
-    results.update(location.dict())
-    return results
+    # results = person.dict()
+    # results.update(location.dict())
+    # return results
+    return person
