@@ -79,6 +79,15 @@ class Location(BaseModel):
         max_length=50
     )
 
+    class Config:
+        schema_extra = {
+            'example': {
+                'city': 'Ixtapaluca',
+                'state': 'México',
+                'country': 'México We'
+            }
+        }
+
 
 @app.get('/')
 def home():
@@ -134,9 +143,9 @@ def update_person(
         gt=0
     ),
     person: Person = Body(...),
-    # location: Location = Body(...)
+    location: Location = Body(...)
 ):
-    # results = person.dict()
-    # results.update(location.dict())
-    # return results
-    return person
+    results = person.dict()
+    results.update(location.dict())
+    return results
+    # return person
