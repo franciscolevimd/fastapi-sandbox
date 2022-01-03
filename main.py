@@ -28,57 +28,46 @@ class HairColor(Enum):
     blue = 'blue'
 
 
-class Person(BaseModel):
+class PersonBase(BaseModel):
     first_name: str = Field(
         ...,
         min_length=1,
-        max_length=50
+        max_length=50,
+        example='Arisaurio'
     )
     last_name: str = Field(
         ...,
         min_length=1,
-        max_length=50
+        max_length=50,
+        example='Rex'
     )
     age: int = Field(
         ...,
         gt=0,
-        le=1000
+        le=1000,
+        example=17
     )
     hair_color: Optional[HairColor] = Field(default=None, example='blue')
     is_married: Optional[bool] = Field(default=None, example=False)
+
+    # class Config:
+    #     schema_extra = {
+    #         'example': {
+    #             'first_name': 'Arisaurio',
+    #             'last_name': 'Rex',
+    #             'age': 17,
+    #             'hair_color': 'blue',
+    #             'is_married': False
+    #         }
+    #     }
+
+
+class Person(PersonBase):
     password: str = Field(..., min_length=8)
 
-    class Config:
-        schema_extra = {
-            'example': {
-                'first_name': 'Arisaurio',
-                'last_name': 'Rex',
-                'age': 17,
-                'hair_color': 'blue',
-                'is_married': False,
-                'password': 'BvZxFd48'
-            }
-        }
 
-
-class PersonOut(BaseModel):
-    first_name: str = Field(
-        ...,
-        min_length=1,
-        max_length=50
-    )
-    last_name: str = Field(
-        ...,
-        min_length=1,
-        max_length=50
-    )
-    age: int = Field(
-        ...,
-        gt=0,
-        le=1000
-    )
-    hair_color: Optional[HairColor] = Field(default=None, example='blue')
-    is_married: Optional[bool] = Field(default=None, example=False)
+class PersonOut(PersonBase):
+    pass
 
 
 class Location(BaseModel):
