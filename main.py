@@ -144,7 +144,8 @@ def create_person(person: Person = Body(...)):
     path='/person/detail',
     status_code=status.HTTP_200_OK,
     tags=['Persons'],
-    summary='Retreives the basic Person information'
+    summary='Retreives the basic Person information',
+    deprecated=True
 )
 def show_person(
         name: Optional[str] = Query(
@@ -261,7 +262,7 @@ def update_person(
     response_model=LoginOut,
     status_code=status.HTTP_200_OK,
     tags=['Persons'],
-    summary='Authenticate a username in the app'
+    summary='Authenticate an username in the app'
 )
 def login(
     username: str = Form(...),
